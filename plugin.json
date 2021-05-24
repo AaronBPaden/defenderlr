@@ -1,0 +1,10 @@
+{
+	"plugin": {
+		"name": "defenderlr",
+		"description": "Configure left-right controls for Defender",
+		"version": "1",
+		"author": "Aaron Paden",
+		"type": "plugin",
+		"start": "false"
+	}
+}
