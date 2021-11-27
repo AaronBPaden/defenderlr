@@ -2,9 +2,10 @@
 -- copyright-holders:Aaron Paden
 -- Original idea by Radek Dutkiewicz AKA oomek
 -- http://forum.arcadecontrols.com/index.php?topic=163525.0
+
 local exports = {}
 exports.name = 'defenderlr'
-exports.version = '2'
+exports.version = '3'
 exports.description = 'Configure left-right controls for Defender'
 exports.license = 'The BSD 3-Clause License'
 exports.author = { name = 'Aaron Paden' }
@@ -35,31 +36,50 @@ function defenderlr.startplugin()
 	local memory = nil
 	local thrust = nil
 	local function process_frame()
-		if input:seq_pressed(button_left) then
-			-- You can observe the current facing at address 0xA0BD.
-			-- Originally I tried tracking that address and then triggering
-			-- the Reverse input when the player was facing the wrong way.
-			-- I don't understand why, but enabling the Reverse input would
-			-- not reliably change the ship's direction, so I had to revert
-			-- to oomek's solution of writing directly to memory.
-			memory:write_u8(FACING_ADDRESS, FACING_LEFT)
-			thrust:set_value(1)
-		elseif input:seq_pressed(button_right) then
-			memory:write_u8(FACING_ADDRESS, FACING_RIGHT)
-			thrust:set_value(1)
-		else
-			thrust:set_value(0)
+		if input ~= nil then
+			if input:seq_pressed(button_left) then
+				-- You can observe the current facing at address 0xA0BD.
+				-- Originally I tried tracking that address and then triggering
+				-- the Reverse input when the player was facing the wrong way.
+				-- I don't understand why, but enabling the Reverse input would
+				-- not reliably change the ship's direction, so I had to revert
+				-- to oomek's solution of writing directly to memory.
+				memory:write_u8(FACING_ADDRESS, FACING_LEFT)
+				thrust:set_value(1)
+			elseif input:seq_pressed(button_right) then
+				memory:write_u8(FACING_ADDRESS, FACING_RIGHT)
+				thrust:set_value(1)
+			else
+				thrust:set_value(0)
+			end
 		end
 	end
+	
+	local function cleanup()
+		input = nil
+		ioport = nil
+		memory = nil
+		thrust = nil
+		button_left = nil
+		button_right = nil
+		emu.register_frame_done(nil)		
+	end
+
 	local function init_plugin()
 		if emu.romname() == "defender" then
-			input = manager.machine.input
-			ioport = manager.machine.ioport
-			memory = manager.machine.devices[':maincpu'].spaces['program']
-			thrust = ioport.ports[':IN0'].fields['Thrust']
-			button_left = ioport:type_seq(IPT_JOYSTICK_LEFT)
-			button_right = ioport:type_seq(IPT_JOYSTICK_RIGHT)
-			emu.register_frame_done(process_frame)
+			if tonumber(emu.app_version()) >= 0.227 then
+				input = manager.machine.input
+				ioport = manager.machine.ioport
+				memory = manager.machine.devices[':maincpu'].spaces['program']
+				thrust = ioport.ports[':IN0'].fields['Thrust']
+				button_left = ioport:type_seq(IPT_JOYSTICK_LEFT)
+				button_right = ioport:type_seq(IPT_JOYSTICK_RIGHT)
+				emu.register_frame_done(process_frame)
+			else
+				print("ERROR: The 'defenderlr' plugin requires MAME version 0.227 or greater.")			
+			end
+		else
+			cleanup()
 		end
 	end
 	-- Unfortunately these are not listed in the documentation on
@@ -112,6 +132,7 @@ function defenderlr.startplugin()
 	-- emu.image_enumerator(dev) - get image interface enumerator starting at arbitrary point in tree
 	-- emu.image_enumerator(dev) - get image interface enumerator starting at arbitrary point in tree
 	emu.register_start(init_plugin)
+	emu.register_stop(cleanup)
 end
 
 return exports
