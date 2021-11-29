@@ -10,6 +10,8 @@ A note about the implementation. I tried to avoid writing to memory by detecting
 
 Anyway the fact that you can do this with no modifications to mame is pretty cool.
 
+This plugin also works with Stargate.
+
 ## Configuring MAME
 
 Can you launch Defender in MAME?  "mame.exe defender"
