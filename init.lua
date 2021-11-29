@@ -5,8 +5,8 @@
 
 local exports = {}
 exports.name = 'defenderlr'
-exports.version = '3'
-exports.description = 'Configure left-right controls for Defender'
+exports.version = '4'
+exports.description = 'Configure left-right controls for Defender (and Stargate)'
 exports.license = 'The BSD 3-Clause License'
 exports.author = { name = 'Aaron Paden' }
 
@@ -25,10 +25,9 @@ function defenderlr.startplugin()
 	-- But it's easier if someone has already done the work of reverse-engineering
 	-- the game for you. A 10-second search can save you hours. In the case of Defender,
 	-- there is dissassembled source on github already with helpful labels to grep through.
-	local FACING_ADDRESS = 0xA0BB
 	local FACING_LEFT  = 0xFD
 	local FACING_RIGHT = 0x03
-
+	local facing_address = nil
 	local button_left = nil
 	local button_right = nil
 	local input = nil
@@ -44,10 +43,11 @@ function defenderlr.startplugin()
 				-- I don't understand why, but enabling the Reverse input would
 				-- not reliably change the ship's direction, so I had to revert
 				-- to oomek's solution of writing directly to memory.
-				memory:write_u8(FACING_ADDRESS, FACING_LEFT)
+				-- (10yard - The facing address for Stargate is 0x9C92)
+				memory:write_u8(facing_address, FACING_LEFT)
 				thrust:set_value(1)
 			elseif input:seq_pressed(button_right) then
-				memory:write_u8(FACING_ADDRESS, FACING_RIGHT)
+				memory:write_u8(facing_address, FACING_RIGHT)
 				thrust:set_value(1)
 			else
 				thrust:set_value(0)
@@ -66,7 +66,12 @@ function defenderlr.startplugin()
 	end
 
 	local function init_plugin()
-		if emu.romname() == "defender" then
+		if emu.romname() == "defender" or emu.romname() == "stargate" then
+			if emu.romname() == "stargate" then
+				facing_address = 0x9C92
+			else
+				facing_address = 0xA0BB
+			end
 			if tonumber(emu.app_version()) >= 0.227 then
 				input = manager.machine.input
 				ioport = manager.machine.ioport
