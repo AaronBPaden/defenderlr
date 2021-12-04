@@ -1,6 +1,6 @@
 # The defenderlr plugin
 
-This plugin is adapted from the original by oomek here and works with MAME v0.227 or newer.
+This plugin for Defender and Stargate is adapted from [the original by oomek here](http://forum.arcadecontrols.com/index.php/topic,163525.0.html) and works with MAME v0.227 or newer.
 
 It should work with whatever you have configured to act as a joystick with no configuration.
 
@@ -10,68 +10,73 @@ A note about the implementation. I tried to avoid writing to memory by detecting
 
 Anyway the fact that you can do this with no modifications to mame is pretty cool.
 
-This plugin also works with Stargate.
-
 ## Configuring MAME
 
-Can you launch Defender in MAME?  "mame.exe defender"
-\- If not, you need to find the correct version of the "defender.zip" ROM file for your version of MAME and put it the "\mame\roms" folder.  (ROM not provided here.)
+1. Can you launch Defender and Stargate in MAME? (`mame.exe defender` and `mame.exe stargate`)
 
-If you don't already have one, create a mame.ini file using the "mame -cc" (create config) command.
-\- Open it in Notepad and verify that it contains "plugins    1". (enabled)
+If not, you need to find the correct version of the "defender.zip" and "stargate.zip" ROM files for your version of MAME and put them the `\mame\roms\` folder.  (ROMs not provided here.)
 
-```
-#  
-# SCRIPTING OPTIONS  
-#  
-autoboot_command  
-autoboot_delay 0  
-autoboot_script  
-console 0  
-plugins 1
-```
+2. If you don't already have one, create a "mame.ini" file using the `mame -cc` (create config) command.
 
-Next, check the paths for inis and plugins so you know where to put those files so MAME can find them.
-For example, "inipath    .;ini;ini/presets" indicates that MAME will look for ini files in three folders "\mame\", "\mame\ini\", and "\mame\ini\presets\".
+Open it in Notepad and verify that it contains `plugins    1` (enabled).
 
 ```
-#  
-# CORE SEARCH PATH OPTIONS  
-#  
-homepath .  
-rompath roms  
-hashpath hash  
-samplepath samples  
-artpath artwork  
-ctrlrpath ctrlr  
-inipath .;ini;ini/presets  
-fontpath .  
-cheatpath cheat  
-crosshairpath crosshair  
-pluginspath plugins
+#
+# SCRIPTING OPTIONS
+#
+autoboot_command
+autoboot_delay      0
+autoboot_script
+console             0
+plugins             1
 ```
 
-Make a "\mame\plugins\defenderlr\" folder.
-\- Put the init.lua and plugin.json plugin files in that folder.
+Check the `inipath` and `pluginspath` settings so you know where to put those files so MAME can find them.
 
-Make a text file named "defender.ini" in either the ini folder or the same folder as the MAME executable.
-\-  It should contain the text "plugin    defenderlr".
+For example, `inipath    .;ini;ini/presets` indicates that MAME will look for .ini files in three folders `\mame\`, `\mame\ini\`, and `\mame\ini\presets\`.
 
-Enable the defenderlr plugin via the MAME user interface "plugins" menu.
-  or
-Edit the "plugin.ini" file and change "defenderlr        0" (disabled) to "defenderlr        1". (enabled)
+```
+#
+# CORE SEARCH PATH OPTIONS
+#
+homepath        .
+rompath         roms
+hashpath        hash
+samplepath      samples
+artpath         artwork
+ctrlrpath       ctrlr
+inipath         .;ini;ini/presets
+fontpath        .
+cheatpath       cheat
+crosshairpath   crosshair
+pluginspath     plugins
+```
+
+4. Make a `\mame\plugins\defenderlr\` folder.
+
+Put the "init.lua" and "plugin.json" plugin files in that folder.
+
+5. Make text files named "defender.ini" and "stargate.ini" in either the `\mame\ini\` or the `\mame\` folder.
+
+Both ".ini" files should contain the text `plugin    defenderlr`.
+
+6. Enable the defenderlr plugin via the MAME user interface "plugins" menu.
+
+**or**
+
+Edit the "plugin.ini" file and change `defenderlr    0` (disabled) to `defenderlr    1`. (enabled)
 
 ```
 #  
 # PLUGINS OPTIONS  
 #  
-autofire 0  
-cheat 0  
-cheatfind 0  
-commonui 0  
-console 0  
-data 1  
-defenderlr 1
+autofire      0
+cheat         0
+cheatfind     0
+commonui      0
+console       0
+data          1
+defenderlr    1
 ```
 
-### Now you're ready to play Defender and blast those pesky aliens.
+### Now you're ready to play Defender or Stargate and blast those pesky aliens.
