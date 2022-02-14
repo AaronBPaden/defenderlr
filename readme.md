@@ -52,15 +52,15 @@ crosshairpath   crosshair
 pluginspath     plugins
 ```
 
-4. Make a `\mame\plugins\defenderlr\` folder.
+3. Make a `\mame\plugins\defenderlr\` folder.
 
 Put the "init.lua" and "plugin.json" plugin files in that folder.
 
-5. Make text files named "defender.ini" and "stargate.ini" in either the `\mame\ini\` or the `\mame\` folder.
+4. Make text files named "defender.ini" and "stargate.ini" in either the `\mame\ini\` or the `\mame\` folder.
 
 Both ".ini" files should contain the text `plugin    defenderlr`.
 
-6. Enable the defenderlr plugin via the MAME user interface "plugins" menu.
+5. Enable the defenderlr plugin via the MAME user interface "plugins" menu.
 
 **or**
 
