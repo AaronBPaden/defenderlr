@@ -2,7 +2,7 @@
 	"plugin": {
 		"name": "defenderlr",
 		"description": "Configure left-right controls for Defender (and Stargate)",
-		"version": "5",
+		"version": "6",
 		"author": "Aaron Paden",
 		"type": "plugin",
 		"start": "false"
