@@ -69,8 +69,8 @@ function defenderlr.startplugin()
 		if frame_subscription ~= nil then
 			frame_subscription:unsubscribe()
 		end
-		reset_subscription:unsubscribe()
-		stop_subscription:unsubscribe()
+		--reset_subscription:unsubscribe()
+		--stop_subscription:unsubscribe()
 	end
 
 	local function init_plugin()
