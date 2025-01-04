@@ -60,6 +60,13 @@ Put the "init.lua" and "plugin.json" plugin files in that folder.
 
 Both ".ini" files should contain the text `plugin    defenderlr`.
 
+If you want to use more than one plugin, include a separate line for each one.
+
+```
+plugin    skipstartupframes
+plugin    defenderlr
+```
+
 5. Enable the defenderlr plugin via the MAME user interface "plugins" menu.
 
 **or**
