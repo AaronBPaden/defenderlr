@@ -80,7 +80,7 @@ function defenderlr.startplugin()
 			else
 				facing_address = 0xA0BB
 			end
-			if tonumber(emu.app_version()) >= 0.254 then
+			if emu.app_version() >= "0.254" then
 				input = manager.machine.input
 				ioport = manager.machine.ioport
 				memory = manager.machine.devices[':maincpu'].spaces['program']
