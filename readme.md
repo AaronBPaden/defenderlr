@@ -86,4 +86,10 @@ data          1
 defenderlr    1
 ```
 
+6. To run additional plugins, launch the game from a batch file or command line.
+
+For example, this will launch Stargate with the `cheat` and `timer` plugins added to any you enabled in "stargate.ini". (step 4)
+
+`mame stargate -plugin cheat,timer`
+
 ### Now you're ready to play Defender or Stargate and blast those pesky aliens.
